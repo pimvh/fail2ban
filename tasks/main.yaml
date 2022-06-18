@@ -12,10 +12,11 @@
     - admin_mail
     - jails
 
-- name: install fail2ban
+- name: install fail2ban (and required nftables package)
   package:
     name:
       - fail2ban
+      - nftables
     state: present
   become: true
 
