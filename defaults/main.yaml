@@ -1,0 +1,7 @@
+---
+admin_mail: ""
+fail2ban_dir: /etc/fail2ban
+
+jails:
+  - sshd
+

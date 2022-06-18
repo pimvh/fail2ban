@@ -1,0 +1,54 @@
+---
+- name: "Verify that required variables are defined"
+  assert:
+    that:
+      - "{{ item }} is defined"
+      - "{{ item }} | length > 0"
+      - "{{ item }} != None"
+    fail_msg: "{{ item }} needs to be set for the role to work"
+    success_msg: "Required variable {{ item }} is defined"
+  loop:
+    - abuseip_api_key
+    - admin_mail
+    - jails
+
+- name: install fail2ban
+  package:
+    name:
+      - fail2ban
+    state: present
+  become: true
+
+- name: Copy template fail2ban jail local file
+  template:
+    src: jail.local.j2
+    dest: "{{ fail2ban_dir }}/jail.local"
+    owner: root
+    mode: u=rw,g=r
+    backup: yes
+  become: true
+
+- name: Copy nginx template files
+  template:
+    src: "filter.d/nginx-{{ item }}.conf"
+    dest: "{{ fail2ban_dir }}/filter.d/nginx-{{ item }}.conf"
+    owner: root
+    mode: u=rw,g=r
+  become: true
+  loop:
+    #- http-auth
+    - nohome
+    - noproxy
+    - noscript
+
+- name: Copy template recidive file
+  template:
+    src: jail.d/recidive.conf.j2
+    dest: "{{ fail2ban_dir }}/jail.d/recidive.conf"
+    owner: root
+    mode: u=rw,g=r
+  become: true
+
+- name: Reload fail2ban client
+  command: fail2ban-client reload
+  become: true
