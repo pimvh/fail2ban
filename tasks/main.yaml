@@ -42,12 +42,18 @@
     - noproxy
     - noscript
 
-- name: Copy template recidive file
-  template:
-    src: jail.d/recidive.conf.j2
-    dest: "{{ fail2ban_dir }}/jail.d/recidive.conf"
-    owner: root
-    mode: u=rw,g=r
+#- name: Copy template recidive file
+#  template:
+#    src: jail.d/recidive.conf.j2
+#    dest: "{{ fail2ban_dir }}/jail.d/recidive.conf"
+#    owner: root
+#    mode: u=rw,g=r
+# become: true
+- name: ensure fail2ban is started
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes
   become: true
 
 - name: Reload fail2ban client
