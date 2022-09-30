@@ -93,8 +93,13 @@ enabled  = true
 port     = http,https
 filter   = nginx-noproxy
 logpath  = /var/log/nginx/access.log
-maxretry = 2 
-{% endif %} 
+maxretry = 2
+{% endif %}
+
+{% if 'postfix' in jails %}
+[postfix]
+enabled = true
+{% endif %}
 
 #
 # ......
