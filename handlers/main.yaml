@@ -1,0 +1,8 @@
+- name: ensure fail2ban is started
+  service:
+    name: fail2ban
+    state: restarted
+    enabled: yes
+  become: true
+  listen: restart fail2ban
+

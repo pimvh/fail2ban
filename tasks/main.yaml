@@ -28,6 +28,7 @@
     mode: u=rw,g=r
     backup: yes
   become: true
+  notify: restart fail2ban
 
 - name: Copy nginx template files
   template:
@@ -41,6 +42,7 @@
     - nohome
     - noproxy
     - noscript
+  notify: restart fail2ban
 
 #- name: Copy template recidive file
 #  template:
@@ -49,13 +51,3 @@
 #    owner: root
 #    mode: u=rw,g=r
 # become: true
-- name: ensure fail2ban is started
-  service:
-    name: fail2ban
-    state: started
-    enabled: yes
-  become: true
-
-- name: Reload fail2ban client
-  command: fail2ban-client reload
-  become: true
