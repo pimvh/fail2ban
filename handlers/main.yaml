@@ -2,7 +2,6 @@
   service:
     name: fail2ban
     state: restarted
-    enabled: yes
+    enabled: true
   become: true
   listen: restart fail2ban
-

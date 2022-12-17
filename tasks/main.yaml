@@ -1,6 +1,6 @@
 ---
 - name: "Verify that required variables are defined"
-  assert:
+  ansible.builtin.assert:
     that:
       - "{{ item }} is defined"
       - "{{ item }} | length > 0"
@@ -12,8 +12,8 @@
     - admin_mail
     - jails
 
-- name: install fail2ban (and required nftables package)
-  package:
+- name: Install fail2ban (and required nftables package)
+  ansible.builtin.package:
     name:
       - fail2ban
       - nftables
@@ -21,33 +21,24 @@
   become: true
 
 - name: Copy template fail2ban jail local file
-  template:
+  ansible.builtin.template:
     src: jail.local.j2
     dest: "{{ fail2ban_dir }}/jail.local"
     owner: root
     mode: u=rw,g=r
-    backup: yes
+    backup: true
   become: true
   notify: restart fail2ban
 
 - name: Copy nginx template files
-  template:
+  ansible.builtin.template:
     src: "filter.d/nginx-{{ item }}.conf"
     dest: "{{ fail2ban_dir }}/filter.d/nginx-{{ item }}.conf"
     owner: root
     mode: u=rw,g=r
   become: true
   loop:
-    #- http-auth
     - nohome
     - noproxy
     - noscript
   notify: restart fail2ban
-
-#- name: Copy template recidive file
-#  template:
-#    src: jail.d/recidive.conf.j2
-#    dest: "{{ fail2ban_dir }}/jail.d/recidive.conf"
-#    owner: root
-#    mode: u=rw,g=r
-# become: true
