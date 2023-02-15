@@ -54,10 +54,10 @@ port   = ssh
 
 # Ban IP and report to AbuseIPDB for SSH Brute-Forcing
 action = %(action_)s
-         {% if fail2ban_abuseip_api_key is defined %}
+         {% if fail2ban_abuseip_api_key is defined -%}
          %(action_abuseipdb)s[abuseipdb_apikey="{{ fail2ban_abuseip_api_key }}",abuseipdb_category="18,22"]
-         {% endif %}
-{% endif -%}
+         {% endif -%}
+{% endif %}
 
 {% if 'nginx' in fail2ban_jails %}
 
