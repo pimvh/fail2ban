@@ -1,7 +1,8 @@
 ---
-admin_mail: ""
+fail2ban_admin_mail: ""
 fail2ban_dir: /etc/fail2ban
 
-jails:
-  - sshd
+fail2ban_abuseip_api_key: ""
 
+fail2ban_jails:
+  - sshd

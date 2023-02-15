@@ -42,7 +42,7 @@ banaction = nftables-multiport
 chain     = prerouting
 banaction_allports = nftables-allports
 
-{% if 'sshd' in jails %}
+{% if 'sshd' in fail2ban_jails %}
 [sshd]
 enabled = true
 
@@ -54,12 +54,12 @@ port   = ssh
 
 # Ban IP and report to AbuseIPDB for SSH Brute-Forcing
 action = %(action_)s
-         {% if abuse_ip_api_key is defined %}
-         %(action_abuseipdb)s[abuseipdb_apikey="{{ abuseip_api_key }}",abuseipdb_category="18,22"]
+         {% if fail2ban_abuseip_api_key is defined %}
+         %(action_abuseipdb)s[abuseipdb_apikey="{{ fail2ban_abuseip_api_key }}",abuseipdb_category="18,22"]
          {% endif %}
-{% endif %}
+{% endif -%}
 
-{% if 'nginx' in jails %}
+{% if 'nginx' in fail2ban_jails %}
 
 [nginx-http-auth]
 enabled  = true
@@ -94,12 +94,12 @@ port     = http,https
 filter   = nginx-noproxy
 logpath  = /var/log/nginx/access.log
 maxretry = 2
-{% endif %}
+{% endif -%}
 
-{% if 'postfix' in jails %}
+{% if 'postfix' in fail2ban_jails %}
 [postfix]
 enabled = true
-{% endif %}
+{% endif -%}
 
 #
 # ......

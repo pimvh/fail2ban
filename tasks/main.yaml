@@ -1,5 +1,5 @@
 ---
-- name: "Verify that required variables are defined"
+- name: Verify that required variables are defined
   ansible.builtin.assert:
     that:
       - "{{ item }} is defined"
@@ -8,9 +8,9 @@
     fail_msg: "{{ item }} needs to be set for the role to work"
     success_msg: "Required variable {{ item }} is defined"
   loop:
-    - abuseip_api_key
-    - admin_mail
-    - jails
+    - fail2ban_admin_mail
+    - fail2ban_jails
+    # - abuseip_api_key
 
 - name: Install fail2ban (and required nftables package)
   ansible.builtin.package:

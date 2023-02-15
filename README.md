@@ -10,12 +10,13 @@ pip3 install ansible
 
 ## Required variables
 
-Set the variables as shown in defined.
+Set the variables as shown in defaults.
 
-Currently available jails are:
+Currently available fail2ban_jails are:
 
 - sshd
 - nginx
+- postfix
 
 # Example playbook
 
