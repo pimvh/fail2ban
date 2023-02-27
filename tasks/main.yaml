@@ -10,7 +10,6 @@
   loop:
     - fail2ban_admin_mail
     - fail2ban_jails
-    # - abuseip_api_key
 
 - name: Install fail2ban (and required nftables package)
   ansible.builtin.package:
@@ -26,7 +25,7 @@
     dest: "{{ fail2ban_dir }}/jail.local"
     owner: root
     mode: u=rw,g=r
-    backup: true
+    # validation not support by fail2ban
   become: true
   notify: restart fail2ban
 
@@ -36,6 +35,7 @@
     dest: "{{ fail2ban_dir }}/filter.d/nginx-{{ item }}.conf"
     owner: root
     mode: u=rw,g=r
+    # validation not support by fail2ban
   become: true
   loop:
     - nohome

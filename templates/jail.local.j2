@@ -94,11 +94,41 @@ port     = http,https
 filter   = nginx-noproxy
 logpath  = /var/log/nginx/access.log
 maxretry = 2
-{% endif -%}
+{% endif %}
 
 {% if 'postfix' in fail2ban_jails %}
 [postfix]
 enabled = true
+mode     = aggressive
+filter   = postfix
+logpath  = /var/log/mail.log
+action = %(action_)s
+         {% if fail2ban_abuseip_api_key is defined -%}
+         %(action_abuseipdb)s[abuseipdb_apikey="{{ fail2ban_abuseip_api_key }}",abuseipdb_category="18"]
+         {% endif %}
+
+# or another jail (rewrite filter parameters of jail)
+
+[postfix-rbl]
+enabled = true
+filter = postfix[mode=rbl]
+logpath  = /var/log/mail.log
+
+action = %(action_)s
+         {% if fail2ban_abuseip_api_key is defined -%}
+         %(action_abuseipdb)s[abuseipdb_apikey="{{ fail2ban_abuseip_api_key }}",abuseipdb_category="18"]
+         {% endif %}
+
+# jail to match "too many errors", related postconf `smtpd_hard_error_limit`:
+# (normally included in other modes (normal, more, extra, aggressive), but this jail'd allow to ban on the first message)
+
+[postfix-many-errors]
+enabled = true
+filter = postfix[mode=errors]
+logpath  = /var/log/mail.log
+
+maxretry = 1
+
 {% endif -%}
 
 #
