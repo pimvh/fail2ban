@@ -1,0 +1,3 @@
+---
+systemd_failmail_email: "foo@example.com"
+fail2ban_admin_mail: "foo@example.com"
