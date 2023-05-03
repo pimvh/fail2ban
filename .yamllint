@@ -1,5 +1,5 @@
----
 # terraform managed
+---
 extends: default
 
 rules:
@@ -12,3 +12,4 @@ rules:
   line-length: disable
   key-ordering: disable
   truthy: disable
+
