@@ -1,5 +1,5 @@
 ---
-- name: ensure fail2ban is started
+- name: Ensure fail2ban is started
   ansible.builtin.systemd:
     name: fail2ban
     state: restarted
