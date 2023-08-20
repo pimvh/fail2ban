@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: Pim van Helvoirt
+  author: pimvh
   description: |
     role to configure fail2ban using nftables, and optionally you can pass an abuseipdb API key.
   license: GPL-3.0-only
