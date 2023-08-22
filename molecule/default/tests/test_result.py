@@ -9,5 +9,5 @@ def test_fail2ban_running(host):
 
 def test_fail2ban_file_created(host):
     """test that the fail2ban jail.local file is created"""
-
-    assert host.file("/etc/fail2ban/jail.local")
+    with host.sudo():
+        assert host.file("/etc/fail2ban/jail.local")
