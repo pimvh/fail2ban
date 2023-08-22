@@ -4,7 +4,8 @@ import testinfra
 def test_fail2ban_running(host):
     """test that the fail2ban service is running"""
 
-    assert host.service("fail2ban").is_running
+    with host.sudo():
+        assert host.service("fail2ban").is_running
 
 
 def test_fail2ban_file_created(host):
